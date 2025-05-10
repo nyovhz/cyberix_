@@ -30,7 +30,7 @@ export default function Home() {
 
       {/* Scripts locales */}
       {[
-        '/js/analyser.js',
+        'public/js/analyser.js',
         '/thrjs/OrbitControls.js',
         '/thrjs/GLTFLoader.js',
         '/thrjs/DRACOLoader.js',

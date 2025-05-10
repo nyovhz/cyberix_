@@ -3,6 +3,8 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import { useRef } from 'react'
+import welcomeTitle from '../public/img/welcome_title.png';
+
 
 export default function Home() {
   const audioRef = useRef(null)
@@ -30,7 +32,7 @@ export default function Home() {
 
       {/* Scripts locales */}
       {[
-        'public/js/analyser.js',
+        '/js/analyser.js',
         '/thrjs/OrbitControls.js',
         '/thrjs/GLTFLoader.js',
         '/thrjs/DRACOLoader.js',
@@ -46,7 +48,7 @@ export default function Home() {
 
       {/* UI principal */}
       <div className="load_page">
-        <div className="image_banner"></div>
+        <div className="image_banner" style={{ backgroundImage: `url(${welcomeTitle.src})` }}></div>
         <div className="image_banner_button"></div>
       </div>
 

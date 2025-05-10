@@ -25,16 +25,24 @@ const button_menu = document.querySelector(".toggle_tracklist");
 const button_menu_mobile = document.querySelector(".tracklist_button");
 const track_menu = document.querySelector(".tracklist");
 
-function setAnalyser(){
-  audioCtx = new AudioContext();
-  audioSrc = audioCtx.createMediaElementSource(audio_);
-  analyser = audioCtx.createAnalyser();
-  audioSrc.connect(analyser);
-  analyser.connect(audioCtx.destination);
-  analyser.fftSize = 256;
-  bufferLength = analyser.frequencyBinCount;
-  dataArray = new Uint8Array(bufferLength);
-};
+function setAnalyser() {
+  const audio_ = document.querySelector(".audio");
+
+  // Verificar que el selector encontró el audio
+  if (audio_ && audio_ instanceof HTMLMediaElement) {
+    audioCtx = new AudioContext();
+    const audioSrc = audioCtx.createMediaElementSource(audio_);
+    analyser = audioCtx.createAnalyser();
+    audioSrc.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    analyser.fftSize = 256;
+    bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+  } else {
+    console.error('El elemento de audio no se encontró o no es válido.');
+  }
+}
+
 
 
 function updateFrequencys(){
@@ -67,11 +75,12 @@ function updateFrequencys(){
 
 
 function update() {
-	requestAnimationFrame( update);
-  if(!audio_.paused){
+  requestAnimationFrame(update);
+  if (audio_ && !audio_.paused) {
     updateFrequencys();
   }
-};
+}
+
 
 set.addEventListener('click', setAnalyser);
 
@@ -90,7 +99,7 @@ load.addEventListener('click', function(){
 });
 
 contact.addEventListener('click', function(){
-  window.open('https://www.instagram.com/_data.leakage_/', '_blank');
+  window.open('https://www.instagram.com/nyovhz_/', '_blank');
 });
 
 update();

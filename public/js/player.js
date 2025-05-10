@@ -63,13 +63,13 @@ let current_track = null;
 //Load Source
 
 
-// function defaultTrack(trackIndex){
-//   play_button.classList.add("active");
-//   current_track = trackIndex;
-//   audio.src = "audio/cyberixComp/" + trackList[trackIndex].file;
-//   changeTitle(trackIndex);
-//   x(0, 0);
-// }
+function defaultTrack(trackIndex){
+  play_button.classList.add("active");
+  current_track = trackIndex;
+  audio.src = "audio/cyberixComp/" + trackList[trackIndex].file;
+  changeTitle(trackIndex);
+  x(0, 0);
+}
 
 function loadTracks(){
   trackList.forEach((track, index) => {
@@ -97,15 +97,16 @@ function loadTracks(){
   });
 }
 
-function pointerToTrack(n, m){
+function pointerToTrack(n, m) {
   const l = document.getElementsByClassName('tracks');
-  if(m != null){
+  if (m != null && l[m]) {
     l[m].classList.add('active');
-    if(n != null){
-      l[n].classList.remove('active');
-    }
+  }
+  if (n != null && l[n]) {
+    l[n].classList.remove('active');
   }
 }
+
 
 function loadTrack(trackIndex){
   const l = document.getElementsByClassName('tracks');
@@ -122,10 +123,7 @@ function loadTrack(trackIndex){
 }
 
 
-
-window.addEventListener('load', function(){
-  loadTracks();
-});
+loadTracks();
 
 let convertTime = function(time)
 {
@@ -274,25 +272,20 @@ skin_button.onclick = function() {
 
 
 window.addEventListener('keydown', function(e){
-  if(e.code == 'ShiftRight' || e.code == 'ShiftLeft'){
-    track_menu.classList.toggle("active");
+  switch(e.code) {
+    case 'ShiftRight':
+    case 'ShiftLeft':
+      track_menu.classList.toggle("active");
+      break;
+    case 'Space':
+      changeMediaButton();
+      break;
+    case 'ArrowRight':
+      next();
+      break;
+    case 'ArrowLeft':
+      pre();
+      break;
   }
 });
 
-window.addEventListener('keydown', function(e){
-  if(e.code == 'Space'){
-    changeMediaButton();
-  }
-});
-
-window.addEventListener('keydown', function(e){
-  if(e.code == 'ArrowRight'){
-    next();
-  }
-});
-
-window.addEventListener('keydown', function(e){
-  if(e.code == 'ArrowLeft'){
-    pre();
-  }
-});

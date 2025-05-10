@@ -1,0 +1,1804 @@
+
+@font-face {
+  font-family: 'xxx';
+  src: url('/fonts/xxx.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body {
+  margin:0;
+  background-color: black;
+  overflow: hidden;
+}
+
+html * {
+  font-family: 'xxx';
+}
+
+  #three_canvas {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #hydra_canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+  }
+
+  #freqMonitor {
+    position: absolute;
+    z-index: 5;
+    visibility: visible;
+    bottom: 25%;
+    left: 10%;
+    width: 80%;
+    height: 65px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 100%;
+    background-color: rgba(0,0,0,0.5);
+    box-shadow: 0px 10px 10px black;
+  }
+
+  a{
+    filter: drop-shadow(0px 0px 5px  rgba(100,100,100,1)) invert(75%) contrast(1);
+  }
+
+
+  .sc_icon {
+      width: 35px;
+      height: 35px;
+      border:0;
+      align-items: center;
+      margin-top: 10px;
+      /* filter: drop-shadow(0px 0px 0px  rgba(100,100,100,0.2)) invert(75%) contrast(1.5); */
+  }
+
+  .audio {
+    visibility: hidden;
+  }
+
+  .camera_audio {
+    visibility: hidden;
+  }
+
+  .load_page_audio {
+    visibility: hidden;
+  }
+
+  .onloadpage {
+    visibility: hidden;
+  }
+
+
+  .load_page{
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0,1);
+    z-index: 7;
+    visibility: visible;
+    transition: visibility 1s linear, opacity 1s;
+  }
+
+  .load_page .image_banner {
+    position:relative;
+    text-align: center;
+    margin: auto;
+    margin-top: 5%;
+    width: 90%;
+    height: 90%;
+    visibility: visible;
+    background-image: url('/img/welcome_title.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: drop-shadow(0px 0px 15px  rgba(0,100,90,0.7)) invert(8%) contrast(1.5);
+  }
+
+  .image_banner_button{
+    position:relative;
+    width: 90%;;
+    height: 13%;
+    bottom: 20%;
+    background-color: rgba(0,0,0,0);
+    text-align: center;
+    margin: auto;
+  }
+
+  .image_banner.active {
+    visibility: hidden;
+  }
+
+  .load_page.active{
+    visibility: hidden;
+    opacity: 0;
+  }
+
+.banner{
+  position:absolute;
+  bottom: 15%;
+  left: 10%;
+  width: 80%;
+  border: 1px solid rgba(0, 100, 0, 0.8);
+  border-radius: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 5;
+  background-color: rgba(0,0,0,0.5);
+  box-shadow: 0px 10px 10px black;
+}
+
+.banner .track_name{
+  display: inline-block;
+  z-index: 5;
+  width: 100%;
+  /* text-align: center; */
+  position:relative;
+  top: 3 px;
+  margin-left: 80%;
+  font-size: 2.5rem;
+  animation: sliding 12s linear infinite;
+  text-decoration: none!important;
+  color:black;
+}
+
+@keyframes sliding {
+  0%{
+    transform:translate(0,0);
+  }
+  100%{
+    transform: translate(-400%, 0);
+  }
+}
+
+
+
+.timeline_ {
+ display: inline-grid;
+ grid-template-columns: 4rem auto 4rem;
+ color: white;
+ border: 1px solid rgba(0, 0, 0, 0.8);
+ border-radius: 100%;
+ position: absolute;
+ bottom: 5%;
+ left: 10%;
+ width: 80%;
+ height: 28px;
+ z-index: 5;
+}
+
+.current-time{
+  font-size: 0.8rem;
+  font-family: sans-serif;
+  padding-top: 7px;
+  color: white;
+  text-align: center;
+}
+
+.total-duration{
+  font-size: 0.8rem;
+  font-family: sans-serif;
+  padding-top: 7px;
+  color: white;
+  text-align: center;
+}
+
+.timeline_slider {
+  border: 1px solid rgba(0, 100, 0, 0.8);
+  background-color: rgba(0,0,0,100);
+  height: 50%;
+  width: 100%;
+  margin-top: 6px;
+  border-radius: 100%;
+  box-shadow: 0px 0px 6px 6px rgba(10,10,10,0.4);
+}
+
+.progress {
+  background-color: rgba(255, 255, 255,  0.1);
+  width: 0%;
+  height: 38%;
+  margin-top: 4.7px;
+  border-radius: 80%;
+}
+
+
+.tracklist_button{
+  top: 10px;
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  z-index: 6;
+  right: 5px;
+  background-image: url('/img/tracks_button.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.tracklist_back {
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+  position: absolute;
+  visibility: hidden;
+}
+
+.tracklist{
+  visibility: hidden;
+  z-index: 6;
+  margin:0;
+  top:0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: blue;
+  overflow: hidden;
+  padding: 0;
+}
+
+.tracklist.active {
+  visibility: visible;
+  z-index: 6;
+  top:0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  color: blue;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.9);
+  text-align: center;
+  list-style-type: none;
+}
+
+.tracklist a{
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  margin-top: 45px;
+  font-family: 'xxx';
+  font-size: 2.5rem;
+  filter: drop-shadow(0px 0px 5px  rgba(100,100,100,1)) invert(75%) contrast(1.5);
+}
+
+.tracklist a.active {
+  text-decoration: none;
+  color: black;
+  font-family: 'xxx';
+  overflow: hidden;
+}
+
+
+/* ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (max-width:  335px) and (min-width: 280px){
+
+  #hydra_canvas_2 {
+    width: 129px;
+    height: 129px;
+    border-radius: 100%;
+    position: fixed;
+    top: 67px;
+    left: 85px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  position:relative;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  height: 300px;
+  width: 300px;
+  visibility: visible;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  position:fixed;
+  width: 45px;
+  height: 15px;
+  background-color: rgba(255,0,0,0);
+  transform: translate(129px, 260px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  margin-top: 2px;
+  font-size: 13px;
+}
+
+.pre_track{
+  width: 40px;
+  height: 15px;
+  background: rgba(255,50,0,0);
+  position: fixed;
+  transform: translate(80px, 248px) rotateZ(27deg);
+}
+
+.pre_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 1px;
+  font-size: 13px;
+}
+
+.next_track{
+  width: 40px;
+  height: 15px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(182px, 248px) rotateZ(-29deg);
+}
+
+.next_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 1px;
+  font-size: 13px;
+}
+
+.reload_track{
+  width: 25px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(93px, 198px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 5px;
+  color: gray;
+  font-size: 15px;
+}
+
+.random_track{
+  width: 25px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(184px, 197px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 8px;
+  color: gray;
+  font-size: 11px;
+}
+
+.toggle_cam{
+  width: 55px;
+  height: 18px;
+  background: rgba(0,255,0,0);
+  position: fixed;
+  transform: translate(124px, 215px);
+}
+
+.skin_{
+  width: 60px;
+  height: 22px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(65px, 50px) rotateZ(-38deg);
+}
+
+}
+
+
+
+/* ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (max-width:  375px) and (min-width: 335px){
+
+  #hydra_canvas_2 {
+    width: 145px;
+    height: 145px;
+    border-radius: 100%;
+    position: fixed;
+    top: 75px;
+    left: 95px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  position:relative;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  height: 335px;
+  width: 335px;
+  visibility: visible;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  position:fixed;
+  width: 50px;
+  height: 18px;
+  background-color: rgba(255,0,0,0);
+  transform: translate(144px, 290px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+.pre_track{
+  width: 50px;
+  height: 18px;
+  background: rgba(255,50,0,0);
+  position: fixed;
+  transform: translate(88px, 277px) rotateZ(27deg);
+}
+
+.pre_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.next_track{
+  width: 50px;
+  height: 18px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(200px, 277px) rotateZ(-29deg);
+}
+
+.next_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.reload_track{
+  width: 25px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(105px, 223px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 4px;
+  color: gray;
+  font-size: 17px;
+}
+
+.random_track{
+  width: 25px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(208px, 222px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 5px;
+  color: gray;
+  font-size: 12px;
+}
+
+.toggle_cam{
+  width: 60px;
+  height: 20px;
+  background: rgba(0,255,0,0);
+  position: fixed;
+  transform: translate(139px, 239px);
+}
+
+.skin_{
+  width: 60px;
+  height: 22px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(75px, 55px) rotateZ(-38deg);
+}
+
+}
+
+
+/* ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (max-width:  475px) and (min-width: 375px){
+
+  #hydra_canvas_2 {
+    width: 161px;
+    height: 161px;
+    border-radius: 100%;
+    position: fixed;
+    top: 84.5px;
+    left: 107px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  position:relative;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  height: 375px;
+  width: 375px;
+  visibility: visible;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  position:fixed;
+  width: 60px;
+  height: 20px;
+  background-color: rgba(255,0,0,0);
+  transform: translate(160px, 325px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.pre_track{
+  width: 50px;
+  height: 20px;
+  background: rgba(255,50,0,0);
+  position: fixed;
+  transform: translate(98px, 308px) rotateZ(25deg);
+}
+
+.pre_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 4px;
+  margin-left: 4px;
+  font-size: 13px;
+}
+
+.next_track{
+  width: 50px;
+  height: 20px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(225px, 312px) rotateZ(-29deg);
+}
+
+.next_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 3px;
+  margin-left: 6px;
+  font-size: 13px;
+}
+
+.reload_track{
+  width: 25px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(119px, 251px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 4px;
+  color: gray;
+  font-size: 17px;
+}
+
+.random_track{
+  width: 25px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(234px, 250px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 5px;
+  color: gray;
+  font-size: 12px;
+}
+
+.toggle_cam{
+  width: 60px;
+  height: 20px;
+  background: rgba(0,255,0,0);
+  position: fixed;
+  transform: translate(159px, 269px);
+}
+
+.skin_{
+  width: 65px;
+  height: 22px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(86px, 65px) rotateZ(-38deg);
+}
+
+}
+
+
+/* ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (max-width:  575px) and (min-width: 475px){
+
+  #hydra_canvas_2 {
+    width: 179px;
+    height: 179px;
+    border-radius: 100%;
+    position: fixed;
+    top: 93px;
+    left: 118px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  position:relative;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  height: 415px;
+  width: 415px;
+  visibility: visible;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  position:fixed;
+  width: 60px;
+  height: 20px;
+  background-color: rgba(255,0,0,0);
+  transform: translate(178px, 360px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  margin-top: 4.5px;
+  margin-left: 2px;
+  font-size: 13px;
+}
+
+.pre_track{
+  width: 50px;
+  height: 20px;
+  background: rgba(255,50,0,0);
+  position: fixed;
+  transform: translate(112px, 343px) rotateZ(29deg);
+}
+
+.pre_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 4px;
+  margin-left: 4px;
+  font-size: 13px;
+}
+
+.next_track{
+  width: 50px;
+  height: 20px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(254px, 344px) rotateZ(-30deg);
+}
+
+.next_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 4px;
+  margin-left: 1px;
+  font-size: 13px;
+}
+
+.reload_track{
+  width: 25px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(133px, 279px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 4px;
+  color: gray;
+  font-size: 17px;
+}
+
+.random_track{
+  width: 25px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(260px, 278px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 6px;
+  margin-left: 2px;
+  color: gray;
+  font-size: 12px;
+}
+
+.toggle_cam{
+  width: 68px;
+  height: 20px;
+  background: rgba(0,255,0,0);
+  position: fixed;
+  transform: translate(175px, 299px);
+}
+
+.skin_{
+  width: 65px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(100px, 70px) rotateZ(-38deg);
+}
+
+}
+
+
+/* ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (max-width:  675px) and (min-width: 575px){
+
+  #hydra_canvas_2 {
+    width: 230px;
+    height: 230px;
+    border-radius: 100%;
+    position: fixed;
+    top: 121px;
+    left: 152px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  position:relative;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  height: 535px;
+  width: 535px;
+  visibility: visible;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  position:fixed;
+  width: 78px;
+  height: 28px;
+  background-color: rgba(255,0,0,0);
+  transform: translate(230px, 465px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  margin-top: 4.5px;
+  margin-left: 5px;
+  font-size: 18px;
+}
+
+.pre_track{
+  width: 65px;
+  height: 25px;
+  background: rgba(255,50,0,0);
+  position: fixed;
+  transform: translate(144px, 442px) rotateZ(29deg);
+}
+
+.pre_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 5px;
+  margin-left: 4px;
+  font-size: 17px;
+}
+
+.next_track{
+  width: 65px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(326px, 445px) rotateZ(-30deg);
+}
+
+.next_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 4px;
+  margin-left: 3px;
+  font-size: 17px;
+}
+
+.reload_track{
+  width: 35px;
+  height: 35px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(171px, 358px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 5px;
+  color: gray;
+  font-size: 23px;
+}
+
+.random_track{
+  width: 35px;
+  height: 35px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(335px, 357px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 8px;
+  margin-left: 1px;
+  color: gray;
+  font-size: 18px;
+}
+
+.toggle_cam{
+  width: 90px;
+  height: 25px;
+  background: rgba(0,255,0,0);
+  position: fixed;
+  transform: translate(225px, 385px);
+}
+
+.skin_{
+  width: 90px;
+  height: 30px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(125px, 95px) rotateZ(-38deg);
+}
+
+}
+
+
+/* ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (max-width:  775px) and (min-width: 675px){
+
+  #hydra_canvas_2 {
+    width: 258px;
+    height: 258px;
+    border-radius: 100%;
+    position: fixed;
+    top: 136px;
+    left: 170px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  position:relative;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  height: 600px;
+  width: 600px;
+  visibility: visible;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  position:fixed;
+  width: 90px;
+  height: 30px;
+  background-color: rgba(255,0,0,0);
+  transform: translate(257px, 520px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  margin-top: 6px;
+  margin-left: 3px;
+  font-size: 20px;
+}
+
+.pre_track{
+  width: 75px;
+  height: 28px;
+  background: rgba(255,50,0,0);
+  position: fixed;
+  transform: translate(162px, 496px) rotateZ(29deg);
+}
+
+.pre_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 5px;
+  margin-left: 4px;
+  font-size: 20px;
+}
+
+.next_track{
+  width: 70px;
+  height: 28px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(367px, 498px) rotateZ(-30deg);
+}
+
+.next_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 5px;
+  margin-left: 3px;
+  font-size: 20px;
+}
+
+.reload_track{
+  width: 38px;
+  height: 38px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(192px, 402px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 7px;
+  color: gray;
+  font-size: 23px;
+}
+
+.random_track{
+  width: 38px;
+  height: 38px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(375px, 400px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 10px;
+  margin-left: 3px;
+  color: gray;
+  font-size: 18px;
+}
+
+.toggle_cam{
+  width: 100px;
+  height: 30px;
+  background: rgba(0,255,0,0);
+  position: fixed;
+  transform: translate(253px, 432px);
+}
+
+.skin_{
+  width: 100px;
+  height: 30px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(140px, 105px) rotateZ(-37deg);
+}
+
+}
+
+/* ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (max-width:  875px) and (min-width: 775px){
+
+  #hydra_canvas_2 {
+    width: 259px;
+    height: 259px;
+    border-radius: 100%;
+    position: fixed;
+    top: 134px;
+    left: 170px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  position:relative;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  height: 600px;
+  width: 600px;
+  visibility: visible;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  position:fixed;
+  width: 90px;
+  height: 30px;
+  background-color: rgba(255,0,0,0);
+  transform: translate(257px, 520px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  margin-top: 6px;
+  margin-left: 3px;
+  font-size: 20px;
+}
+
+.pre_track{
+  width: 75px;
+  height: 28px;
+  background: rgba(255,50,0,0);
+  position: fixed;
+  transform: translate(162px, 496px) rotateZ(29deg);
+}
+
+.pre_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 5px;
+  margin-left: 4px;
+  font-size: 20px;
+}
+
+.next_track{
+  width: 70px;
+  height: 28px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(367px, 498px) rotateZ(-30deg);
+}
+
+.next_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 5px;
+  margin-left: 3px;
+  font-size: 20px;
+}
+
+.reload_track{
+  width: 38px;
+  height: 38px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(192px, 402px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 7px;
+  color: gray;
+  font-size: 23px;
+}
+
+.random_track{
+  width: 38px;
+  height: 38px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(375px, 400px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 10px;
+  margin-left: 3px;
+  color: gray;
+  font-size: 18px;
+}
+
+.toggle_cam{
+  width: 100px;
+  height: 30px;
+  background: rgba(0,255,0,0);
+  position: fixed;
+  transform: translate(253px, 432px);
+}
+
+.skin_{
+  width: 100px;
+  height: 30px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(140px, 105px) rotateZ(-37deg);
+}
+
+}
+
+
+/* ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (max-width:  975px) and (min-width: 875px){
+
+  #hydra_canvas_2 {
+    width: 259px;
+    height: 259px;
+    border-radius: 100%;
+    position: fixed;
+    top: 134px;
+    left: 170px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  position:relative;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  height: 600px;
+  width: 600px;
+  visibility: visible;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  position:fixed;
+  width: 90px;
+  height: 30px;
+  background-color: rgba(255,0,0,0);
+  transform: translate(257px, 520px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  margin-top: 6px;
+  margin-left: 3px;
+  font-size: 20px;
+}
+
+.pre_track{
+  width: 75px;
+  height: 28px;
+  background: rgba(255,50,0,0);
+  position: fixed;
+  transform: translate(162px, 496px) rotateZ(29deg);
+}
+
+.pre_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 5px;
+  margin-left: 4px;
+  font-size: 20px;
+}
+
+.next_track{
+  width: 70px;
+  height: 28px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(367px, 498px) rotateZ(-30deg);
+}
+
+.next_track i{
+  background: rgba(255,50,0,0);
+  margin-top: 5px;
+  margin-left: 3px;
+  font-size: 20px;
+}
+
+.reload_track{
+  width: 38px;
+  height: 38px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(192px, 402px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 7px;
+  color: gray;
+  font-size: 23px;
+}
+
+.random_track{
+  width: 38px;
+  height: 38px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(375px, 400px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  margin-top: 10px;
+  margin-left: 3px;
+  color: gray;
+  font-size: 18px;
+}
+
+.toggle_cam{
+  width: 100px;
+  height: 30px;
+  background: rgba(0,255,0,0);
+  position: fixed;
+  transform: translate(253px, 432px);
+}
+
+.skin_{
+  width: 100px;
+  height: 30px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(140px, 105px) rotateZ(-37deg);
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* //////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////// */
+
+@media only screen and (min-width: 1000px) and (min-height: 640px){
+  #three_canvas {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #hydra_canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    visibility: visible;
+  }
+
+  #hydra_canvas_2 {
+    width: 260px;
+    height: 260px;
+    border-radius: 100%;
+    position: fixed;
+    top: 135px;
+    left: 170px;
+    z-index: 5;
+    filter: drop-shadow(0px 0px 35px  rgba(0,0,0,1));
+  }
+
+
+  #freqMonitor {
+    position: absolute;
+    z-index: 5;
+    visibility: hidden;
+    bottom: 25%;
+    left: 10%;
+    width: 80%;
+    height: 65px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  a{
+    filter: drop-shadow(0px 0px 5px  rgba(100,100,100,1)) invert(75%) contrast(1.5);
+  }
+
+
+  .sc_icon {
+      width: 35px;
+      height: 35px;
+      border:0;
+      align-items: center;
+      margin-top: 10px;
+      /* filter: drop-shadow(0px 0px 0px  rgba(100,100,100,0.2)) invert(75%) contrast(1.5); */
+  }
+
+  .audio {
+    visibility: hidden;
+  }
+
+  .camera_audio {
+    visibility: hidden;
+  }
+
+  .load_page_audio {
+    visibility: hidden;
+  }
+
+  .onloadpage {
+    visibility: hidden;
+  }
+
+
+  .load_page{
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0,1);
+    z-index: 7;
+    visibility: visible;
+    transition: visibility 1s linear, opacity 1s;
+  }
+
+  .load_page .image_banner {
+    position:relative;
+    text-align: center;
+    margin: auto;
+    margin-top: 0%;
+    width: 90%;
+    height: 90%;
+    visibility: visible;
+    background-image: url('/img/welcome_title.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: drop-shadow(0px 0px 15px  rgba(0,100,90,0.7)) invert(8%) contrast(1.5);
+  }
+
+  .image_banner_button{
+    position:relative;
+    width: 90%;;
+    height: 13%;
+    bottom: 20%;
+    background-color: rgba(0,0,0,0);
+    text-align: center;
+    margin: auto;
+  }
+
+  .image_banner.active {
+    visibility: hidden;
+  }
+
+
+  .load_page.active{
+    visibility: hidden;
+    opacity: 0;
+  }
+
+
+.banner{
+  position:absolute;
+  bottom: 18%;
+  left: 50%;
+  width: 45%;
+  border: 1px solid rgba(0, 100, 0, 0.8);
+  border-radius: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 5;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.banner .track_name{
+  display: inline-block;
+  z-index: 5;
+  width: 100%;
+  text-align: center;
+  margin-left: 80%;
+  font-size: 3.5rem;
+  animation: sliding 15s linear infinite;
+  text-decoration: none!important;
+  color:black;
+}
+
+@keyframes sliding {
+  0%{
+    transform:translate(0,0);
+  }
+  100%{
+    transform: translate(-400%, 0);
+  }
+}
+
+.player_ {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.media_ {
+  width: 600px;
+  height: 100%;
+  margin-top: 40px;
+  margin-left: 40px;
+  background-image: url('/img/device_vertical_gray.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  align-items: center;
+  filter: drop-shadow(0px 0px 15px  rgba(100,100,100,0.5));
+}
+
+.play_stop_button{
+  width: 100px;
+  height: 28px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(253px, 520px);
+}
+
+.play_stop_button i{
+  background: rgba(255,0,0,0);
+  position: fixed;
+  margin-left: 35%;
+  margin-top: 5%;
+  font-size: 25px;
+}
+
+.pre_track{
+  width: 75px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(160px, 500px) rotateZ(28deg);
+}
+
+.pre_track i{
+  background: rgba(255,0,0,0);
+  position: fixed;
+  margin-left: 34%;
+  margin-top: 0%;
+  font-size: 25px;
+}
+
+.next_track{
+  width: 75px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(365px, 500px) rotateZ(-28deg);
+}
+
+.next_track i{
+  background: rgba(255,0,0,0);
+  position: fixed;
+  margin-left: 35%;
+  margin-top: 1%;
+  font-size: 25px;
+}
+
+.reload_track{
+  width: 45px;
+  height: 45px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(188px, 400px) rotateZ(30deg);
+}
+
+.reload_track i{
+  background: rgba(255,0,0,0);
+  position: fixed;
+  margin-left: 20%;
+  margin-top: 22%;
+  font-size: 25px;
+  color: grey;
+}
+
+.random_track{
+  width: 45px;
+  height: 45px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(372px, 395px) rotateZ(-30deg);
+}
+
+.random_track i{
+  background: rgba(255,0,0,0);
+  position: fixed;
+  margin-left: 32%;
+  margin-top: 30%;
+  font-size: 17px;
+  color: grey;
+}
+
+.toggle_tracklist{
+  visibility: hidden;
+  width: 60px;
+  height: 25px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(162px, 270px);
+}
+
+.toggle_cam{
+  width: 105px;
+  height: 35px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(250px, 428px);
+}
+
+.toggle_back{
+  bottom:75px;
+  width: 65px;
+  height: 65px;
+  position: absolute;
+  z-index: 6;
+  background-image: url('/img/tracks_button.png');
+  transform: scale(-1, -1);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.skin_{
+  width: 105px;
+  height: 35px;
+  background: rgba(255,0,0,0);
+  position: fixed;
+  transform: translate(140px, 102px) rotateZ(-38deg);
+}
+
+.timeline_ {
+ display: inline-grid;
+ grid-template-columns: 4rem auto 4rem;
+ color: white;
+ border: 1px solid rgba(0, 255, 0, 0.8);
+ border-radius: 100%;
+ position: absolute;
+ bottom: 5%;
+ left: 50%;
+ width: 45%;
+ height: 50px;
+ z-index: 5;
+}
+
+.current-time{
+  font-size: 0.8rem;
+  font-family: sans-serif;
+  padding-top: 18px;
+  color: white;
+  text-align: center;
+}
+
+.total-duration{
+  font-size: 0.8rem;
+  font-family: sans-serif;
+  padding-top: 18px;
+  color: white;
+  text-align: center;
+}
+
+.timeline_slider {
+  border: 1px solid rgba(0, 100, 0, 0.8);
+  background-color: rgba(0,0,0,100);
+  height: 50%;
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 100%;
+  box-shadow: 0px 0px 6px 6px rgba(10,10,10,0.4);
+}
+
+.progress {
+  background-color: rgba(255, 255, 255,  0.1);
+  width: 0%;
+  height: 38%;
+  margin-top: 7.5px;
+  border-radius: 80%;
+}
+
+
+.tracklist_button{
+  top: 10px;
+  width: 55px;
+  height: 55px;
+  position: absolute;
+  z-index: 6;
+  right: 5px;
+  background-image: url('/img/tracks_button.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.tracklist_back {
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+  position: absolute;
+  visibility: hidden;
+}
+
+.tracklist{
+  /* visibility: hidden; */
+  z-index: 6;
+  margin:0;
+  top:0;
+  position: absolute;
+  width: 100%;
+  height: 0%;
+  color: blue;
+  overflow: hidden;
+  padding: 0;
+  transition: height 1s;
+}
+
+.tracklist.active {
+  visibility: visible;
+  z-index: 6;
+  top:0;
+  left: 50%;
+  position: fixed;
+  width: 45%;
+  height: 95%;
+  color: blue;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.8);
+  text-align: center;
+  list-style-type: none;
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+}
+
+.tracklist a{
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  margin-top: 40px;
+  font-family: 'xxx';
+  font-size: 3.5rem;
+  filter: drop-shadow(0px 0px 5px  rgba(100,100,100,1)) invert(75%) contrast(1.5);
+}
+
+.tracklist a.active {
+  text-decoration: none;
+  color: black;
+  font-family: 'xxx';
+  overflow: hidden;
+}
+
+}
